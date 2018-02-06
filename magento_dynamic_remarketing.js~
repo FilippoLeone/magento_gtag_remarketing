@@ -41,15 +41,6 @@ gtag('event', 'page_view', {
 });
 </script>
 
-magento/app/design/frontend/rwd/default/template/page/1column.phtml
-
-<script>
-gtag('event', 'page_view', {
-    ecomm_pagetype: 'home'
-});
-</script>
-
-
 // In development
 Catalog/Product.phtml
 <?php
