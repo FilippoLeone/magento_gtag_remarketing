@@ -1,7 +1,25 @@
-/magento/app/design/frontend/rwd/default/template/catalog/product/view.phtml
-##### WHERE `rwd` IS THE TEMPLATE NAME #####
+Pathlists:
 
-<?php $_product = Mage::registry("current_product");?>
+magento/app/design/frontend/rwd/default/template/catalog/product/view.phtml -> productpage
+magento/app/design/frontend/rwd/default/template/catalogsearch/result.phtml -> searchresults
+magento/app/design/frontend/rwd/default/template/checkout/cart.phtml -> cart
+magento/app/design/frontend/base/default/template/catalog/category/view.phtml -> catalog
+magento/app/design/frontend/base/default/template/checkout/success.phtml -> purchase
+//** For the homepage please take a look in CMS/Pages and add it there. **/
+
+Note that those paths can change from theme to theme, a decent research on this matter is required to understand how to correctly implement everything.
+
+Home:
+
+<script>
+gtag('event', 'page_view', {
+    ecomm_pagetype: 'home'
+});
+</script>
+
+Product:
+
+<?php $_product = Mage::registry("current_product"); ?>
 <?php if ($_product && $_product->getId()); ?>
 
 <script>
@@ -12,7 +30,7 @@ gtag('event', 'page_view', {
 });
 </script>
 
-magento/app/design/frontend/rwd/default/template/checkout/cart.phtml
+Cart:
 
 <?php $items = Mage::getSingleton("checkout/session")->getQuote()->getAllVisibleItems();?>
 <?php $totalvalue = Mage::getSingleton('checkout/session')->getQuote()->getGrandTotal(); ?>
@@ -25,8 +43,7 @@ gtag('event', 'page_view', {
 });
 </script>
 
-
-Success.phtml
+Purchase:
 
 <?php
 $order = Mage::getModel("sales/order")->loadByIncrementId($this->getOrderId());
@@ -42,29 +59,21 @@ gtag('event', 'page_view', {
 });
 </script>
 
-magento/app/design/frontend/rwd/default/template/page/1column.phtml
+Searchresults:
 
 <script>
 gtag('event', 'page_view', {
-    ecomm_pagetype: 'home'
+    ecomm_pagetype: 'searchresults'
 });
 </script>
 
+//** Please note that the prodid for the category is WIP. **/
 
-// In development
-Catalog/Product.phtml
-<?php
-$catalog = Mage::getModel("catalog/product");
-$items = $catalog->getAllVisibleItems();
-?>
+<?php $catname = $this->GetCurrentCategory()->getName(); ?>
 
 <script>
 gtag('event', 'page_view', {
-    ecomm_prodid: [<?php foreach ($items as $item) {?>"<?php echo $item->getSku();?>",<?php }?>],
-    ecomm_pagetype: 'category'
+    ecomm_pagetype: 'catalog',
+    ecomm_category: '<?php echo $catname; ?>'
 });
 </script>
-
-
-// In the header from magento backend add the GTAG AW-XXXX code.
-
