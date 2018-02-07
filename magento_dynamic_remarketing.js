@@ -31,6 +31,7 @@ Success.phtml
 <?php
 $order = Mage::getModel("sales/order")->loadByIncrementId($this->getOrderId());
 $items = $order->getAllVisibleItems();
+$total = $order->getGrandTotal();
 ?>
 
 <script>
