@@ -67,13 +67,24 @@ gtag('event', 'page_view', {
 });
 </script>
 
-//** Please note that the prodid for the category is WIP. **/
+Catalog:
 
+<?php
+$category = Mage::registry('current_category');
+$products = $category->getProductCollection();
+    foreach ($products as $product) {
+        $sku[] = $product->getSku();
+    }
+?>
+
+<?php $sku = ('["' . implode('","', $sku) . '"]'); ?>
 <?php $catname = $this->GetCurrentCategory()->getName(); ?>
-
 <script>
+var prodid = <?=$sku?> ;
 gtag('event', 'page_view', {
+    ecomm_prodid: prodid,
     ecomm_pagetype: 'catalog',
-    ecomm_category: '<?php echo $catname; ?>'
+    ecomm_category: "<?=$catname?>"
 });
 </script>
+
